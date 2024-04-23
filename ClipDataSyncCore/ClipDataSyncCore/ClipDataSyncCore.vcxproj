@@ -148,9 +148,11 @@
     <ClInclude Include="ClipData\ImportClipData.h" />
     <ClInclude Include="ClipData\ManagerClipData.h" />
     <ClInclude Include="ClipData\ManagerClipDataForWindows.h" />
+    <ClInclude Include="ThirdParty\json.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClipDataSyncCore.cpp" />
+    <ClCompile Include="ClipData\ExportClipData.cpp" />
     <ClCompile Include="ClipData\ManagerClipDataForWindows.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

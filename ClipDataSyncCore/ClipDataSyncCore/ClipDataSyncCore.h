@@ -10,7 +10,10 @@
 
 #include "ClipData/ClipData.h"
 #include "ClipData/ManagerClipDataForWindows.h"
-#include "cpprest/json.h"
+#include "ClipData/ExportClipData.h"
+#include "ThirdParty/json.hpp"
+
+using json = nlohmann::json;
 
 CLIPDATASYNCCORE_API class ClipDataSyncCore
 {
@@ -19,9 +22,11 @@ private:
 
 public:
 	CLIPDATASYNCCORE_API ClipDataSyncCore();
-	CLIPDATASYNCCORE_API web::json::value getClipData();
-	CLIPDATASYNCCORE_API web::json::value updateCLipDataForServer();
+	CLIPDATASYNCCORE_API void executeClipCopy();
+	CLIPDATASYNCCORE_API void executeClipPaste();
+	CLIPDATASYNCCORE_API json getClientClipData();
+	CLIPDATASYNCCORE_API json updateClipDataForServer();
 	CLIPDATASYNCCORE_API void setClipData();
-	CLIPDATASYNCCORE_API bool syncCLipDatafromServer();
+	CLIPDATASYNCCORE_API bool syncClipDatafromServer();
 	CLIPDATASYNCCORE_API bool setUserData(char* userData);
 };

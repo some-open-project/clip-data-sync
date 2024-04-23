@@ -33,12 +33,18 @@
     <ClInclude Include="ClipDataSyncCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ThirdParty\json.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClipDataSyncCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ClipData\ManagerClipDataForWindows.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClipData\ExportClipData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

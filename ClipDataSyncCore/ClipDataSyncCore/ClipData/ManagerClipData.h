@@ -6,6 +6,7 @@
 class ManagerClipData
 {
 private:
+	const char* mOS = "";
 	std::unique_ptr<ClipData> clipData;
 
 public:
@@ -13,9 +14,13 @@ public:
 	{
 		clipData = std::unique_ptr<ClipData>(new ClipData());
 	}
-	virtual ~ManagerClipData()
-	{
+	virtual ~ManagerClipData() = default;
+
+	virtual std::unique_ptr<ClipData> extractGetClipData() {
+		std::unique_ptr<ClipData> val;
+		return val;
 	}
-	virtual void extractGetClipData() {};
+	virtual void executeCopy() { return; }
 	virtual ClipData getClipData() { return *clipData.get(); }
+	virtual const char* getOS() { return mOS; }
 };

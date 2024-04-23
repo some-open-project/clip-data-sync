@@ -1,10 +1,20 @@
 #pragma once
 
-#include "ClipData.h"
+#include "../ThirdParty/json.hpp"
+
+#include "ManagerClipData.h"
+
+#ifdef _WIN32
+#include "ManagerClipDataForWindows.h"
+#endif
+	
+using json = nlohmann::json;
 
 class ExportClipData
 {
 public:
-	char* exportClipData(ClipData clipData);
-	char* exportClipDataForServer(ClipData clipData);
+	ExportClipData() = default;
+	~ExportClipData() = default;
+
+	json exportClipData(ManagerClipData& mClipData);
 };

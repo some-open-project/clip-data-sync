@@ -1,15 +1,27 @@
 #include "ExportClipData.h"
 
-nlohmann::json& ExportClipData::exportClipData(ClipData clipData)
+json ExportClipData::exportClipData(ManagerClipData& mClipData)
 {
-	nlohmann::json exportClipDataJson;
+	json jsonClipData;
+	jsonClipData["OS"] = mClipData.getOS();
+	ClipData uExportClip = mClipData.getClipData();
 
-	return exportClipDataJson;
-}
+	if (nullptr == uExportClip.getNext()) { return jsonClipData; }
 
-nlohmann::json& ExportClipData::exportClipDataForServer(ClipData clipData)
-{
-	nlohmann::json exportClipDataJson;
+	ClipData* curClipData = uExportClip.getNext();
 
-	return exportClipDataJson;
+	int index = 0;
+	jsonClipData["ClipData"] = json::array();
+	while (nullptr != curClipData)
+	{
+		auto& innerClipData = jsonClipData["ClipData"];
+		innerClipData[index]["EnumClip"] = curClipData->getEnumClip();
+		innerClipData[index]["ClipName"] = curClipData->getClipName();
+		innerClipData[index]["ClipData"] = curClipData->getClipData();
+		index++;
+		curClipData = curClipData->getNext();
+	}
+
+
+	return jsonClipData;
 }

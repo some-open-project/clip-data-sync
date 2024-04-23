@@ -3,6 +3,7 @@
 class ClipData
 {
 private:
+	unsigned int mEnumClip;
 	char* pClipName;
 	char* pClipData;
 	char* encryptionClipName;
@@ -12,6 +13,7 @@ private:
 public:
 	ClipData()
 	{
+		mEnumClip = 0;
 		pClipName = nullptr;
 		pClipData = nullptr;
 		encryptionClipName = nullptr;
@@ -28,9 +30,6 @@ public:
 
 	virtual ~ClipData()
 	{
-		delete(pClipName);
-		delete(pClipData);
-		delete(next);
 	}
 
 	void setNext(ClipData* next)
@@ -41,6 +40,16 @@ public:
 	ClipData* getNext()
 	{
 		return next;
+	}
+
+	void setEnumClip(unsigned int mEnumClip)
+	{
+		this->mEnumClip = mEnumClip;
+	}
+
+	unsigned int getEnumClip()
+	{
+		return mEnumClip;
 	}
 
 	void setClipName(char* pClipName)
