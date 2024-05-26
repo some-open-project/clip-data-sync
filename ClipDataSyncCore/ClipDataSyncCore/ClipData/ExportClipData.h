@@ -3,6 +3,7 @@
 #include "../ThirdParty/json.hpp"
 
 #include "ManagerClipData.h"
+#include "JsonSetting.h"
 
 #ifdef _WIN32
 #include "ManagerClipDataForWindows.h"
@@ -16,5 +17,5 @@ public:
 	ExportClipData() = default;
 	~ExportClipData() = default;
 
-	json exportClipData(ManagerClipData& mClipData);
+	[[nodiscard]] json exportClipData(ManagerClipData& mClipData);
 };

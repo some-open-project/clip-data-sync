@@ -1,5 +1,11 @@
 #include "ClipDataSyncCore.h"
 
+#define JSON_OUTPUT_TEST 1
+
+#if JSON_OUTPUT_TEST == 1
+#include <fstream>
+#endif
+	
 
 ClipDataSyncCore::ClipDataSyncCore()
 {
@@ -18,10 +24,23 @@ json ClipDataSyncCore::getClientClipData()
 	managerClip->executeCopy();
 
 	json clipDataJson = uExportClipData->exportClipData(*managerClip);
-
+	
+#if JSON_OUTPUT_TEST == 1
 	// json 빌드 확인용
-	std::cout << clipDataJson << std::endl;
+	// UTF-8 관련 추가
+	std::ofstream file("./test.json");
+	file << clipDataJson;
+	file.flush();
+	// 빌드 확인 용
+#endif
 
 	return clipDataJson;
 }
 
+bool ClipDataSyncCore::setClipData(json& jsonClipData)
+{	
+	std::unique_ptr<ImportClipData> uImportClipData = std::make_unique<ImportClipData>();
+	bool bCheckImport = uImportClipData->ImportClipDataFromJson(jsonClipData);
+
+	return bCheckImport;
+}

@@ -113,6 +113,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -146,6 +147,7 @@
     <ClInclude Include="ClipData\ClipData.h" />
     <ClInclude Include="ClipData\ExportClipData.h" />
     <ClInclude Include="ClipData\ImportClipData.h" />
+    <ClInclude Include="ClipData\JsonSetting.h" />
     <ClInclude Include="ClipData\ManagerClipData.h" />
     <ClInclude Include="ClipData\ManagerClipDataForWindows.h" />
     <ClInclude Include="ThirdParty\json.hpp" />
@@ -153,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="ClipDataSyncCore.cpp" />
     <ClCompile Include="ClipData\ExportClipData.cpp" />
+    <ClCompile Include="ClipData\ImportClipData.cpp" />
     <ClCompile Include="ClipData\ManagerClipDataForWindows.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

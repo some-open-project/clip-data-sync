@@ -11,6 +11,7 @@
 #include "ClipData/ClipData.h"
 #include "ClipData/ManagerClipDataForWindows.h"
 #include "ClipData/ExportClipData.h"
+#include "ClipData/ImportClipData.h"
 #include "ThirdParty/json.hpp"
 
 using json = nlohmann::json;
@@ -26,7 +27,7 @@ public:
 	CLIPDATASYNCCORE_API void executeClipPaste();
 	CLIPDATASYNCCORE_API json getClientClipData();
 	CLIPDATASYNCCORE_API json updateClipDataForServer();
-	CLIPDATASYNCCORE_API void setClipData();
+	CLIPDATASYNCCORE_API bool setClipData(json& jsonClipData);
 	CLIPDATASYNCCORE_API bool syncClipDatafromServer();
 	CLIPDATASYNCCORE_API bool setUserData(char* userData);
 };

@@ -6,6 +6,7 @@ private:
 	unsigned int mEnumClip;
 	char* pClipName;
 	char* pClipData;
+	size_t mClipSize;
 	char* encryptionClipName;
 	char* encryptionClipData;
 	ClipData* next;
@@ -16,6 +17,7 @@ public:
 		mEnumClip = 0;
 		pClipName = nullptr;
 		pClipData = nullptr;
+		mClipSize = 0;
 		encryptionClipName = nullptr;
 		encryptionClipData = nullptr;
 		next = nullptr;
@@ -60,6 +62,16 @@ public:
 	char* getClipName()
 	{
 		return pClipName;
+	}
+
+	void setClipSize(size_t mClipSize)
+	{
+		this->mClipSize = mClipSize;
+	}
+
+	size_t getClipSize()
+	{
+		return mClipSize;
 	}
 
 	void setClipData(char* pClipData)
