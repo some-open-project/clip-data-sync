@@ -1,6 +1,6 @@
 #include "ClipDataSyncCore.h"
 
-#define JSON_OUTPUT_TEST 1
+#define JSON_OUTPUT_TEST 0
 
 #if JSON_OUTPUT_TEST == 1
 #include <fstream>
@@ -28,9 +28,9 @@ json ClipDataSyncCore::getClientClipData()
 #if JSON_OUTPUT_TEST == 1
 	// json 빌드 확인용
 	// UTF-8 관련 추가
-	std::ofstream file("./test.json");
+	std::ofstream file("./test.json", std::ios::out | std:: ios::binary);
+	file.imbue(std::locale("ko_KR.UTF-8"));
 	file << clipDataJson;
-	file.flush();
 	// 빌드 확인 용
 #endif
 
