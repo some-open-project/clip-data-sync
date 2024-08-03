@@ -114,12 +114,13 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Program Files\PostgreSQL\16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Program Files\PostgreSQL\16\lib\libpq.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -151,12 +152,17 @@
     <ClInclude Include="ClipData\ManagerClipData.h" />
     <ClInclude Include="ClipData\ManagerClipDataForWindows.h" />
     <ClInclude Include="ThirdParty\json.hpp" />
+    <ClInclude Include="Hook\CopyHook.h" />
+    <ClInclude Include="DBManager\DBManager.h" />
+    <ClInclude Include="DBManager\DBPostgre.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClipDataSyncCore.cpp" />
     <ClCompile Include="ClipData\ExportClipData.cpp" />
     <ClCompile Include="ClipData\ImportClipData.cpp" />
     <ClCompile Include="ClipData\ManagerClipDataForWindows.cpp" />
+    <ClCompile Include="Hook\CopyHook.cpp" />
+    <ClCompile Include="DBManager\DBPostgre.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

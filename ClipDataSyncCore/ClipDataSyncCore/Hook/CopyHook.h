@@ -4,5 +4,4 @@ class CopyHook
 {
 public:
 	CopyHook() = default;
-
 };

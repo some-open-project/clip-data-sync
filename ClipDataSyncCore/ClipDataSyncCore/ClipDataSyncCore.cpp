@@ -12,6 +12,7 @@ ClipDataSyncCore::ClipDataSyncCore()
 #ifdef _WIN32
 	managerClip = std::unique_ptr<ManagerClipDataForWindows>(new ManagerClipDataForWindows());
 #endif
+	dbSql = std::unique_ptr<DBPostgre>(new DBPostgre());
 }
 
 #include <iostream>
@@ -43,4 +44,38 @@ bool ClipDataSyncCore::setClipData(json& jsonClipData)
 	bool bCheckImport = uImportClipData->ImportClipDataFromJson(jsonClipData);
 
 	return bCheckImport;
+}
+
+bool ClipDataSyncCore::connectClipSql()
+{
+	return dbSql->Connect();
+}
+
+ClipDataSyncCore& ClipDataSyncCore::setDBName(const char* pDBName)
+{
+	dbSql->setDBName((char*)pDBName);
+	return *this;
+}
+ClipDataSyncCore& ClipDataSyncCore::setDBUserName(const char* pUserName)
+{
+	dbSql->setUserName((char*)pUserName);
+	return *this;
+}
+
+ClipDataSyncCore& ClipDataSyncCore::setDBPassWord(const char* pPassWord)
+{
+	dbSql->setPassWord((char*)pPassWord);
+	return *this;
+}
+
+ClipDataSyncCore& ClipDataSyncCore::setDBHost(const char* pHost)
+{
+	dbSql->setHost((char*)pHost);
+	return *this;
+}
+
+ClipDataSyncCore& ClipDataSyncCore::setDBPort(const char* pPort)
+{
+	dbSql->setPort((char*)pPort);
+	return *this;
 }
