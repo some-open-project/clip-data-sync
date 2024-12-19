@@ -18,9 +18,9 @@ function createWindow() {
     // ***중요***
     mainWindow.loadURL(
         isDev
-            ? "http://localhost:3000"
-            : `file://${path.join(__dirname, "../build/index.html")}`
-    );
+            ? "http://localhost:3000"   // 개발 환경: React 개발 서버
+            : `file://${path.resolve(__dirname, "../build/index.html")}`    // 프로덕션 환경: 빌드 파일
+        );
 
     if (isDev) mainWindow.webContents.openDevTools({ mode: "detach" });
 
