@@ -1,23 +1,20 @@
-import { Box, Container, List, ListItem, ListItemButton, ListItemText, Paper, TextField, Typography } from "@mui/material";
+import { Box, Container, List, ListItem, ListItemButton, ListItemText, TextField, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { cloneElement, useState, ReactElement } from "react";
+import { useState } from "react";
 
-function generate(element: ReactElement<unknown>) {
-  return [0, 1, 2].map((value) =>
-    cloneElement(element, {
-      key: value,
-    }),
-  );
-}
+const items = ['item1', 'item2', 'item3', 'item4', 'item5', 'item6', 'item7', 'item8', 'item9', 'item10'];
 
 export const Dashboard = () => {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
-
-  const items = ['item1', 'item2', 'item3', 'item4', 'item5', 'item6'];
+  const [search, setSearch] = useState<string>('');
 
   // 클릭한 항목 내용 예시
   const getItemDetails = (item: string) => {
     return `${item} details: This is some detailed information about ${item}.`;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
   };
 
   return (
@@ -29,7 +26,7 @@ export const Dashboard = () => {
       }}
     >
       <Box>
-        <TextField id="standard-basic" label="Search" variant="standard" fullWidth />
+        <TextField id="standard-basic" value={search} onChange={handleChange} label="Search" placeholder="Search" variant="standard" fullWidth />
       </Box>
       <Grid container spacing={2} sx={{ height: '100vh' }}>
         {/* 왼쪽 리스트 영역 */}
@@ -44,7 +41,7 @@ export const Dashboard = () => {
           >
             <Typography variant="h6" sx={{ textAlign: "center" }}>Item List</Typography>
             <List>
-              {items.map((item) => (
+              {items.filter(i => i.includes(search)).map((item) => (
                 <ListItem>
                   <ListItemButton
                     key={item}
