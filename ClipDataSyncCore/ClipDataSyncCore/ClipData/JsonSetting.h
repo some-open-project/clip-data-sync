@@ -5,16 +5,16 @@
 
 
 template <std::size_t S>
-constexpr auto makeStringLiteral(const char(&str)[S])
+const inline std::string makeStringLiteral(const char(&str)[S])
 {
-	return std::string_view(str, S - 1);
+	return std::string(str, S - 1);
 }
 
 // Export Import str
-constexpr auto OS = makeStringLiteral("OS");
-constexpr auto CLIPDATAARR = makeStringLiteral("ClipDataArr");
-constexpr auto CLIPINDATA = makeStringLiteral("ClipData");
-constexpr auto CLIPNAME = makeStringLiteral("ClipName");
-constexpr auto CLIPNUMTYPE = makeStringLiteral("ClipEnumType");
-constexpr auto CLIPSIZE = makeStringLiteral("ClipSize");
-constexpr auto CLIPINDATAUTF = makeStringLiteral("ClipDataUtf16");
+const std::string OS = makeStringLiteral("OS");
+const std::string CLIPDATAARR = makeStringLiteral("ClipDataArr");
+const std::string CLIPINDATA = makeStringLiteral("ClipData");
+const std::string CLIPNAME = makeStringLiteral("ClipName");
+const std::string CLIPNUMTYPE = makeStringLiteral("ClipEnumType");
+const std::string CLIPSIZE = makeStringLiteral("ClipSize");
+const std::string CLIPINDATAUTF = makeStringLiteral("ClipDataUtf16");
