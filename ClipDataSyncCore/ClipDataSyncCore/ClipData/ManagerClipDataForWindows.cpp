@@ -86,11 +86,22 @@ std::unique_ptr<ClipData> ManagerClipDataForWindows::extractGetClipData()
 			{
 				continue;
 			}
-			SIZE_T bufferDataLen = GlobalSize(bufferData);
-			char* insertClipData = new char[bufferDataLen + 1];
-			memcpy_s(insertClipData, bufferDataLen + 1, bufferData, bufferDataLen + 1);
+			std::string strBuffer(bufferData);
+			int nBufLen = MultiByteToWideChar(CP_ACP, 0, strBuffer.c_str(), -1, nullptr, 0);
+			std::wstring strUnicodeStr(nBufLen, 0);
+			MultiByteToWideChar(CP_ACP, 0, strBuffer.c_str(), -1, &strUnicodeStr[0], nBufLen);
+			int nUniLen = WideCharToMultiByte(CP_UTF8, 0, strUnicodeStr.c_str(), -1, nullptr, 0, nullptr, nullptr);
+			std::string strUtf8(nUniLen, 0);
+			WideCharToMultiByte(CP_UTF8, 0, strUnicodeStr.c_str(), -1, &strUtf8[0], nUniLen, nullptr, nullptr);
+			size_t nUtf8Len = strUtf8.size() + 1;
+			char* cCurData = new char[nUtf8Len];
+			std::copy(strUtf8.begin(), strUtf8.end(), cCurData);
+			cCurData[strUtf8.size()] = '\0';
+			//SIZE_T bufferDataLen = GlobalSize(cCurData);
+			char* insertClipData = new char[nUtf8Len];
+			memcpy_s(insertClipData, nUtf8Len, cCurData, nUtf8Len);
 			clipPassData->setClipData(insertClipData);
-			clipPassData->setClipSize(bufferDataLen);
+			clipPassData->setClipSize(nUtf8Len);
 			break;
 		}
 		}
@@ -107,16 +118,10 @@ std::unique_ptr<ClipData> ManagerClipDataForWindows::extractGetClipData()
 	nClipDataFormat = EnumClipboardFormats(nClipDataFormat);
 	while (0 != nClipDataFormat)
 	{
-		switch (nClipDataFormat)
-		{
-		case CF_UNICODETEXT:
-		case CF_BITMAP:
-		case CF_ENHMETAFILE:
+		if (std::find(mClipEnum.begin(), mClipEnum.end(), nClipDataFormat) != mClipEnum.end())
 		{
 			nClipDataFormat = EnumClipboardFormats(nClipDataFormat);
 			continue;
-			break;
-		}
 		}
 		TCHAR chrFormatName[256];
 		int resultGetFormatName = GetClipboardFormatName(nClipDataFormat, chrFormatName, 256);

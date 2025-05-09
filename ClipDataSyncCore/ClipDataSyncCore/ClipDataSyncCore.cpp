@@ -1,6 +1,6 @@
 #include "ClipDataSyncCore.h"
 
-#define JSON_OUTPUT_TEST 1
+#define JSON_OUTPUT_TEST 0
 
 #if JSON_OUTPUT_TEST == 1
 #include <fstream>
@@ -12,6 +12,7 @@ ClipDataSyncCore::ClipDataSyncCore()
 #ifdef _WIN32
 	managerClip = std::unique_ptr<ManagerClipDataForWindows>(new ManagerClipDataForWindows());
 #endif
+	dbSql = std::unique_ptr<DBPostgre>(new DBPostgre());
 }
 
 #include <iostream>
@@ -28,9 +29,9 @@ json ClipDataSyncCore::getClientClipData()
 #if JSON_OUTPUT_TEST == 1
 	// json 빌드 확인용
 	// UTF-8 관련 추가
-	std::ofstream file("./test.json");
+	std::ofstream file("./test.json", std::ios::out | std:: ios::binary);
+	file.imbue(std::locale("ko_KR.UTF-8"));
 	file << clipDataJson;
-	file.flush();
 	// 빌드 확인 용
 #endif
 
@@ -43,4 +44,38 @@ bool ClipDataSyncCore::setClipData(json& jsonClipData)
 	bool bCheckImport = uImportClipData->ImportClipDataFromJson(jsonClipData);
 
 	return bCheckImport;
+}
+
+bool ClipDataSyncCore::connectClipSql()
+{
+	return dbSql->Connect();
+}
+
+ClipDataSyncCore& ClipDataSyncCore::setDBName(const char* pDBName)
+{
+	dbSql->setDBName((char*)pDBName);
+	return *this;
+}
+ClipDataSyncCore& ClipDataSyncCore::setDBUserName(const char* pUserName)
+{
+	dbSql->setUserName((char*)pUserName);
+	return *this;
+}
+
+ClipDataSyncCore& ClipDataSyncCore::setDBPassWord(const char* pPassWord)
+{
+	dbSql->setPassWord((char*)pPassWord);
+	return *this;
+}
+
+ClipDataSyncCore& ClipDataSyncCore::setDBHost(const char* pHost)
+{
+	dbSql->setHost((char*)pHost);
+	return *this;
+}
+
+ClipDataSyncCore& ClipDataSyncCore::setDBPort(const char* pPort)
+{
+	dbSql->setPort((char*)pPort);
+	return *this;
 }

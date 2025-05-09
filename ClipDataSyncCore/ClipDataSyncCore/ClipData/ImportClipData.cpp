@@ -30,15 +30,18 @@ bool ImportClipData::ImportClipDataFromJson(json mJson)
 		{
 		case CF_UNICODETEXT:
 		{
-			std::wstring wStrClipData;
-			wStrClipData.assign(strClipData.begin(), strClipData.end());
-			size_t nClipSize = static_cast<int>((wStrClipData.size() + 1) * sizeof(wchar_t));
+			int nUtf8Len = static_cast<int>(strClipData.size());
+			int nUtf16Len = MultiByteToWideChar(CP_UTF8, 0, strClipData.c_str(), nUtf8Len, nullptr, 0);
+			wchar_t* strUtf16 = new wchar_t[nUtf16Len + 1];
+			MultiByteToWideChar(CP_UTF8, 0, strClipData.c_str(), nUtf8Len, strUtf16, nUtf16Len);
+			strUtf16[nUtf16Len] = L'\0';
+			size_t nClipSize = (nUtf16Len + 1) * sizeof(wchar_t);
 			if (0 == nEnumType) { continue; }
 
 			HGLOBAL hData = GlobalAlloc(GMEM_MOVEABLE, nClipSize);
 			if (nullptr == hData) { continue; }
 
-			memcpy(GlobalLock(hData), wStrClipData.c_str(), nClipSize);
+			memcpy(GlobalLock(hData), strUtf16, nClipSize);
 			GlobalUnlock(hData);
 
 			if (nullptr == SetClipboardData(nEnumType, hData))
